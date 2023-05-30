@@ -14,30 +14,31 @@ namespace LibraryInventory.Models
         [Column("ISBN")]
         [Display(Name = "ISBN")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Required(ErrorMessage = "ISBN es obligatorio.")]
         public int ISBN { get; set; }
 
         /// <summary>
         /// Identificador de la editorial
         /// </summary>
-        [Required]
-        [Display(Name = "Identificador editorial")]
         [Column("editoriales_id")]
+        [Display(Name = "Identificador editorial")]
+        [Required(ErrorMessage = "Debe seleccionar una editorial.")]
         public int PublisherId { get; set; }
 
         /// <summary>
         /// Editorial
         /// </summary>
-        [Required]
         [Display(Name = "Editorial")]
+        [Required(ErrorMessage = "Debe seleccionar una editorial.")]
         public Publisher Publisher { get; set; }
 
         /// <summary>
         /// Título
         /// </summary>
         [MaxLength(45)]
-        [Required]
         [Display(Name = "Título")]
         [Column("titulo")]
+        [Required(ErrorMessage = "Título es obligatorio.")]
         public string Title { get; set; }
 
         /// <summary>
@@ -46,6 +47,10 @@ namespace LibraryInventory.Models
         [Column("sinopsis", TypeName = "ntext")]
         [Display(Name = "Sinopsis")]
         public string? Synopsis { get; set; }
+
+        public string? ShortSynopsis
+            => Synopsis != null ? Synopsis.Length < 85 ?
+               Synopsis : $"{Synopsis.Substring(0, 82)}..." : null;
 
         /// <summary>
         /// Número de páginas

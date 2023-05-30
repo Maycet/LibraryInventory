@@ -16,19 +16,19 @@ namespace LibraryInventory.Models
         /// <summary>
         /// Nombre
         /// </summary>
-        [Required]
         [MaxLength(45)]
         [Column("nombre")]
         [Display(Name = "Nombre")]
+        [Required(ErrorMessage = "Nombre es obligatorio.")]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Apellido(s)
         /// </summary>
-        [Required]
         [MaxLength(45)]
         [Column("apellidos")]
-        [Display(Name = "Apellidos")]
+        [Display(Name = "Apellido")]
+        [Required(ErrorMessage = "Apellido es obligatorio.")]
         public string LastName { get; set; }
 
         /// <summary>

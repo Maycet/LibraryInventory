@@ -30,7 +30,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.LastName)
                 </td>
-                <td>
+                <td style="text-align: right">
                     <a asp-action="Details" class="btn-outline-warning btn" asp-route-id="@item.Id">Detalles</a> |
                     <a asp-action="Edit" class="btn-outline-primary btn" asp-route-id="@item.Id">Editar</a> |
                     <a asp-action="Delete" class="btn-outline-danger btn" asp-route-id="@item.Id">Eliminar</a>

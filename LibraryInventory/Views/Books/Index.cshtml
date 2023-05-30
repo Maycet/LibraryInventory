@@ -43,12 +43,12 @@
                     @Html.DisplayFor(modelItem => item.Publisher.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Synopsis)
+                    @Html.DisplayFor(modelItem => item.ShortSynopsis)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.NumberOfPages)
                 </td>
-                <td>
+                <td style="text-align: right">
                     <a asp-action="Details" class="btn-outline-warning btn" asp-route-id="@item.ISBN">Detalles</a> |
                     <a asp-action="Edit" class="btn-outline-primary btn" asp-route-id="@item.ISBN">Editar</a> |
                     <a asp-action="Delete" class="btn-outline-danger btn" asp-route-id="@item.ISBN">Eliminar</a>

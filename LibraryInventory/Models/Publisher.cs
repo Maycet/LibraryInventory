@@ -18,10 +18,10 @@ namespace LibraryInventory.Models
         /// <summary>
         /// Nombre
         /// </summary>
-        [Required]
         [MaxLength(45)]
         [Column("nombre")]
         [Display(Name = "Nombre")]
+        [Required(ErrorMessage = "Nombre es obligatorio.")]
         public string Name { get; set; }
 
         /// <summary>

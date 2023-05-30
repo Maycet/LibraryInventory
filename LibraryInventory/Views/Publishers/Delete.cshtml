@@ -1,0 +1,42 @@
+﻿@model LibraryInventory.Models.Publisher
+
+@{
+    ViewData["Title"] = "Eliminar editorial";
+}
+
+<h2>Eliminar editorial</h2>
+<h3>¿Está seguro/a que desea eliminar el registro?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Office)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Office)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Books)
+        </dt>
+        <dd class="col-sm-10">
+            <ul>
+                @foreach (var book in Model.Books)
+                {
+                    <li>@book.Title</li>
+                }
+            </ul>
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Eliminar" class="btn btn-danger" style="margin: 1em auto !important;" /> |
+        <a asp-action="Index">Volver a la lista</a>
+    </form>
+</div>

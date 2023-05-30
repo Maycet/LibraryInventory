@@ -1,0 +1,41 @@
+﻿@model IEnumerable<LibraryInventory.Models.Publisher>
+
+@{
+    ViewData["Title"] = "Editoriales";
+}
+
+<h1>Editoriales</h1>
+<p>
+    <a asp-action="Create" class="btn-success btn">Registrar editorial</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Office)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Office)
+                </td>
+                <td>
+                    <a asp-action="Details" class="btn-outline-warning btn" asp-route-id="@item.Id">Detalles</a> |
+                    <a asp-action="Edit" class="btn-outline-primary btn" asp-route-id="@item.Id">Editar</a> |
+                    <a asp-action="Delete" class="btn-outline-danger btn" asp-route-id="@item.Id">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

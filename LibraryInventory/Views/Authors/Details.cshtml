@@ -1,0 +1,39 @@
+﻿@model LibraryInventory.Models.Author
+
+@{
+    ViewData["Title"] = "Detalles del Autor";
+}
+
+<h2>Detalles del Autor @Model.Id</h2>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Books)
+        </dt>
+        <dd class="col-sm-10">
+            <ul>
+                @foreach (var authorBook in Model.Books)
+                {
+                    <li>@authorBook.Book.Title</li>
+                }
+            </ul>
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" class="btn-outline-primary btn" asp-route-id="@Model?.Id">Editar</a> |
+    <a asp-action="Index">Volver a la lista</a>
+</div>

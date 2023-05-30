@@ -49,8 +49,8 @@ namespace LibraryInventory.Models
         public string? Synopsis { get; set; }
 
         public string? ShortSynopsis
-            => Synopsis != null ? Synopsis.Length < 85 ?
-               Synopsis : $"{Synopsis.Substring(0, 82)}..." : null;
+            => Synopsis != null ? Synopsis.Length < 70 ?
+               Synopsis : $"{Synopsis[..66]}..." : null;
 
         /// <summary>
         /// Número de páginas

@@ -8,6 +8,17 @@
 <h3>¿Está seguro/a que desea eliminar el registro?</h3>
 <div>
     <hr />
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(value => value.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+        </div>
+    }
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Name)

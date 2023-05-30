@@ -1,7 +1,6 @@
 ﻿using LibraryInventory.Data;
 using LibraryInventory.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace LibraryInventory.Controllers
@@ -9,7 +8,6 @@ namespace LibraryInventory.Controllers
     public class PublishersController : Controller
     {
         private readonly ApplicationDbContext _DbContext;
-
         public PublishersController(ApplicationDbContext context) => _DbContext = context;
 
         public async Task<IActionResult> Index()
@@ -31,41 +29,19 @@ namespace LibraryInventory.Controllers
             return View(Publisher);
         }
 
-        public IActionResult Create()
-        {
-            ViewBag.AvailableBooks = new MultiSelectList(_DbContext.Book, "ISBN", "Title");
-            return View();
-        }
+        public IActionResult Create() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Office")] Publisher publisher, int[] selectedBooks)
+        public async Task<IActionResult> Create([Bind("Id,Name,Office")] Publisher publisher)
         {
             if (ModelState.IsValid)
             {
                 _DbContext.Add(publisher);
                 await _DbContext.SaveChangesAsync();
 
-                if (selectedBooks != null && selectedBooks.Length > 0 && _DbContext.Book != null)
-                    foreach (int selectedItem in selectedBooks)
-                    {
-                        Book? SelectedBook = await _DbContext.Book.FirstOrDefaultAsync(book => selectedItem == book.ISBN);
-                        if (SelectedBook == null) continue;
-
-                        SelectedBook.Publisher = publisher;
-                        SelectedBook.PublisherId = publisher.Id;
-                        _DbContext.Update(SelectedBook);
-
-                        await _DbContext.SaveChangesAsync();
-                    }
-
                 return RedirectToAction(nameof(Index));
             }
-
-            ViewBag.AvailableBooks = new MultiSelectList(_DbContext.Book,
-                                                         "ISBN",
-                                                         "Title",
-                                                         publisher.Books);
             return View(publisher);
         }
 
@@ -75,20 +51,15 @@ namespace LibraryInventory.Controllers
 
             Publisher? Publisher =
                 await _DbContext.Publisher
-                      .Include(publisher => publisher.Books)
                       .FirstOrDefaultAsync(publisher => publisher.Id == id);
             if (Publisher == null) return NotFound();
 
-            ViewBag.AvailableBooks = new MultiSelectList(_DbContext.Book,
-                                                         "ISBN",
-                                                         "Title",
-                                                         Publisher.Books);
             return View(Publisher);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Office")] Publisher publisher, int[] selectedBooks)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Office")] Publisher publisher)
         {
             if (id != publisher.Id) return NotFound();
 
@@ -98,19 +69,6 @@ namespace LibraryInventory.Controllers
                 {
                     _DbContext.Update(publisher);
                     await _DbContext.SaveChangesAsync();
-
-                    if (selectedBooks != null && selectedBooks.Length > 0 && _DbContext.Book != null)
-                        foreach (int selectedItem in selectedBooks)
-                        {
-                            Book? SelectedBook = await _DbContext.Book.FirstOrDefaultAsync(book => selectedItem == book.ISBN);
-                            if (SelectedBook == null) continue;
-
-                            SelectedBook.Publisher = publisher;
-                            SelectedBook.PublisherId = publisher.Id;
-                            _DbContext.Update(SelectedBook);
-
-                            await _DbContext.SaveChangesAsync();
-                        }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -120,10 +78,6 @@ namespace LibraryInventory.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.AvailableBooks = new MultiSelectList(_DbContext.Book,
-                                                         "ISBN",
-                                                         "Title",
-                                                         publisher.Books);
             return View(publisher);
         }
 
@@ -136,8 +90,22 @@ namespace LibraryInventory.Controllers
             if (_DbContext.Publisher == null)
                 return Problem("Entity set 'ApplicationDbContext.Publisher'  is null.");
 
-            Publisher? Publisher = await _DbContext.Publisher.FindAsync(id);
-            if (Publisher != null) _DbContext.Publisher.Remove(Publisher);
+            Publisher? Publisher =
+                await _DbContext.Publisher
+                      .Include(publisher => publisher.Books)
+                      .FirstOrDefaultAsync(publisher => publisher.Id == id);
+
+            if (Publisher != null)
+            {
+                if (Publisher.Books.Any())
+                {
+                    ModelState.AddModelError("BooksAssociationExists",
+                                             "No es posible eliminar una editorial con libros asociados.");
+                    return View(Publisher);
+                }
+
+                _DbContext.Publisher.Remove(Publisher);
+            }
 
             await _DbContext.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

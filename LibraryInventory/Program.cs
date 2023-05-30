@@ -33,7 +33,7 @@ namespace LibraryInventory
 
             WebApplication.UseAuthorization();
 
-            WebApplication.MapControllerRoute(name: "default", pattern: "{controller=Books}/{action=Index}");
+            WebApplication.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}");
 
             WebApplication.Run();
         }

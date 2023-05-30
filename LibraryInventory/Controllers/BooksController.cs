@@ -9,7 +9,6 @@ namespace LibraryInventory.Controllers
     public class BooksController : Controller
     {
         private readonly ApplicationDbContext _DbContext;
-
         public BooksController(ApplicationDbContext context) => _DbContext = context;
 
         public async Task<IActionResult> Index()
@@ -191,12 +190,12 @@ namespace LibraryInventory.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int ISBN)
         {
             if (_DbContext.Book == null)
                 return Problem("Entity set 'ApplicationDbContext.Book' is null.");
 
-            Book? Book = await _DbContext.Book.FirstOrDefaultAsync(book => book.ISBN == id);
+            Book? Book = await _DbContext.Book.FirstOrDefaultAsync(book => book.ISBN == ISBN);
             if (Book != null) _DbContext.Book.Remove(Book);
 
             await _DbContext.SaveChangesAsync();

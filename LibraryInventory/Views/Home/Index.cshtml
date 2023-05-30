@@ -1,0 +1,78 @@
+﻿@model LibraryInventory.Models.HomeViewModel
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+
+<h2 style="margin: 1em auto !important;text-align:center">Resumen: Inventario de Biblioteca</h2>
+<div>
+    <hr />
+    <div class="container" style="max-width:80%">
+        <div class="row" style="margin: 2em auto !important;">
+            <a class="btn-info btn" asp-controller="Books" asp-action="Index"><h3>Libros</h3></a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ISBN</th>
+                        <th>Título</th>
+                        <th>Editorial</th>
+                        <th>No. Páginas</th>
+                        <th>Sinopsis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var book in Model.Books.Take(5))
+                    {
+                        <tr>
+                            <td>@book.ISBN</td>
+                            <td>@book.Title</td>
+                            <td>@book.Publisher.Name</td>
+                            <td>@book.NumberOfPages</td>
+                            <td>@book.Synopsis</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row" style="margin: 2em auto !important;">
+            <a class="btn-info btn" asp-controller="Authors" asp-action="Index"><h3>Autores</h3></a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var author in Model.Authors.Take(5))
+                    {
+                        <tr>
+                            <td>@author.FirstName @author.LastName</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row" style="margin: 2em auto !important;">
+            <a class="btn-info btn" asp-controller="Publishers" asp-action="Index"><h3>Editoriales</h3></a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Sede</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var publisher in Model.Publishers.Take(5))
+                    {
+                        <tr>
+                            <td>@publisher.Name</td>
+                            <td>@publisher.Office</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

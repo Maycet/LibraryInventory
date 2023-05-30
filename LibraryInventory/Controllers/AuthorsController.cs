@@ -9,7 +9,6 @@ namespace LibraryInventory.Controllers
     public class AuthorsController : Controller
     {
         private readonly ApplicationDbContext _DbContext;
-
         public AuthorsController(ApplicationDbContext context) => _DbContext = context;
 
         public async Task<IActionResult> Index()

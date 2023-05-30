@@ -40,6 +40,14 @@ Update-Database
 
 La aplicación web se ejecutará en el puerto 7051 y podrás acceder a ella a través de tu navegador web en la siguiente URL: [http://localhost:7051](http://localhost:7051)
 
+## Puntos pendientes por agregar/mejorar
+
+- Comunación a la base de datos (CRUDs) a través de una API.
+- Implementación de pruebas unitarias.
+- Implementación de inyección de dependencias.
+- Adición de seguridad a través de Login.
+- Ajustes en la edición de registros que cuentan con relaciones uno a muchos, marcando los ítems actualmente relacionados.
+
 ## Contribución
 
 Si deseas contribuir a este proyecto, siéntete libre de hacer una rama y enviar tus mejoras a través de pull requests. También puedes informar cualquier problema o solicitud de características utilizando el sistema de Issues del repositorio.
@@ -91,6 +99,14 @@ Update-Database
 6. Run the application by pressing `Ctrl+F5` or selecting `Debug -> Start Without Debugging` in Visual Studio.
 
 The web application will run on port 5000, and you can access it through your web browser at the following URL: [http://localhost:7051](http://localhost:7051)
+
+## Pending points to add/improve
+
+- Communication to the database (CRUDs) through an API.
+- Implementation of unit tests.
+- Implementation of dependency injection.
+- Addition of security through Login.
+- Adjustments in editing records that have one-to-many relationships, marking currently related items.
 
 ## Contribution
 
